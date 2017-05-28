@@ -3,7 +3,8 @@
 namespace Drupal\ms_ajax_form_example\Validator;
 
 /**
- * Class ValidatorRegex
+ * Class ValidatorRegex.
+ *
  * @package Drupal\ms_ajax_form_example\Validator
  */
 class ValidatorRegex extends BaseValidator {
@@ -27,7 +28,7 @@ class ValidatorRegex extends BaseValidator {
    * {@inheritdoc}
    */
   public function validates($value) {
-    return preg_match($this->pattern,  $value);
+    return preg_match($this->pattern, $value);
   }
 
 }

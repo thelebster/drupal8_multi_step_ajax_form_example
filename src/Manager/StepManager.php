@@ -5,12 +5,17 @@ namespace Drupal\ms_ajax_form_example\Manager;
 use Drupal\ms_ajax_form_example\Step\StepInterface;
 use Drupal\ms_ajax_form_example\Step\StepsEnum;
 
+/**
+ * Class StepManager
+ *
+ * @package Drupal\ms_ajax_form_example\Manager
+ */
 class StepManager {
 
   /**
    * Multi steps of the form.
    *
-   * @var StepInterface
+   * @var \Drupal\ms_ajax_form_example\Step\StepInterface
    */
   protected $steps;
 
@@ -24,18 +29,20 @@ class StepManager {
    * Add a step to the steps property.
    *
    * @param \Drupal\ms_ajax_form_example\Step\StepInterface $step
+   *   Step of the form.
    */
   public function addStep(StepInterface $step) {
     $this->steps[$step->getStep()] = $step;
   }
 
   /**
-   * Fetches a step from the steps property.
-   * If it doesn't exist, create step object.
+   * Fetches step from steps property, If it doesn't exist, create step object.
    *
-   * @param $step_id
+   * @param \Drupal\ms_ajax_form_example\Step\StepsEnum $step_id
+   *   Step ID.
    *
    * @return \Drupal\ms_ajax_form_example\Step\StepInterface
+   *   Return step object.
    */
   public function getStep($step_id) {
     if (isset($this->steps[$step_id])) {
@@ -54,9 +61,12 @@ class StepManager {
   }
 
   /**
-   * @returns all steps.
+   * Get all steps
+   *
+   * @return \Drupal\ms_ajax_form_example\Step\StepInterface
+   *   Steps.
    */
-  public function getAllSteps(){
+  public function getAllSteps() {
     return $this->steps;
   }
 

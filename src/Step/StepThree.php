@@ -7,6 +7,11 @@ use Drupal\ms_ajax_form_example\Button\StepThreePreviousButton;
 use Drupal\ms_ajax_form_example\Validator\ValidatorRegex;
 use Drupal\ms_ajax_form_example\Validator\ValidatorRequired;
 
+/**
+ * Class StepThree.
+ *
+ * @package Drupal\ms_ajax_form_example\Step
+ */
 class StepThree extends BaseStep {
 
   /**
@@ -20,10 +25,10 @@ class StepThree extends BaseStep {
    * {@inheritdoc}
    */
   public function getButtons() {
-    return array(
+    return [
       new StepThreePreviousButton(),
       new StepThreeFinishButton(),
-    );
+    ];
   }
 
   /**
@@ -31,12 +36,12 @@ class StepThree extends BaseStep {
    */
   public function buildStepFormElements() {
 
-    $form['linkedin'] = array(
+    $form['linkedin'] = [
       '#type' => 'textfield',
       '#title' => t('What is your LinkedIn URL?'),
       '#default_value' => isset($this->getValues()['linkedin']) ? $this->getValues()['linkedin'] : NULL,
       '#required' => FALSE,
-    );
+    ];
 
     return $form;
   }
@@ -45,21 +50,21 @@ class StepThree extends BaseStep {
    * {@inheritdoc}
    */
   public function getFieldNames() {
-    return array(
+    return [
       'linkedin',
-    );
+    ];
   }
 
   /**
    * {@inheritdoc}
    */
   public function getFieldsValidators() {
-    return array(
-      'linkedin' => array(
+    return [
+      'linkedin' => [
         new ValidatorRequired("Tell me where I can find your LinkedIn please."),
         new ValidatorRegex(t("I don't think this is a valid LinkedIn URL..."), '/(ftp|http|https):\/\/(.*)linkedin(.*)/'),
-      ),
-    );
+      ],
+    ];
   }
 
 }

@@ -2,6 +2,11 @@
 
 namespace Drupal\ms_ajax_form_example\Step;
 
+/**
+ * Interface StepInterface.
+ *
+ * @package Drupal\ms_ajax_form_example\Step
+ */
 interface StepInterface {
 
   /**

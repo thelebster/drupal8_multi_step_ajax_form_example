@@ -3,7 +3,8 @@
 namespace Drupal\ms_ajax_form_example\Validator;
 
 /**
- * Class ValidatorRequired
+ * Class ValidatorRequired.
+ *
  * @package Drupal\ms_ajax_form_example\Validator
  */
 class ValidatorRequired extends BaseValidator {

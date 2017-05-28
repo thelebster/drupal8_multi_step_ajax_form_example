@@ -3,11 +3,11 @@
 namespace Drupal\ms_ajax_form_example\Step;
 
 /**
- * Class BaseStep
+ * Class BaseStep.
  *
  * @package Drupal\ms_ajax_form_example\Step
  */
-abstract class BaseStep implements StepInterface{
+abstract class BaseStep implements StepInterface {
 
   /**
    * Multi steps of the form.
@@ -17,7 +17,9 @@ abstract class BaseStep implements StepInterface{
   protected $step;
 
   /**
-   * @var array 
+   * Values of element.
+   *
+   * @var array
    */
   protected $values;
 
@@ -53,25 +55,25 @@ abstract class BaseStep implements StepInterface{
    * {@inheritdoc}
    */
   public function getValues() {
-   return $this->values;
+    return $this->values;
   }
 
   /**
    * {@inheritdoc}
    */
   public function getFieldNames() {
-    return array();
+    return [];
   }
 
   /**
    * {@inheritdoc}
    */
-  public function getFieldsValidators(){
-    return array();
+  public function getFieldsValidators() {
+    return [];
   }
 
   /**
-   * Sets current step.
+   * {@inheritdoc}
    */
   protected abstract function setStep();
 

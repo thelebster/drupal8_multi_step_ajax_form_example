@@ -3,7 +3,8 @@
 namespace Drupal\ms_ajax_form_example\Validator;
 
 /**
- * Class BaseValidator
+ * Class BaseValidator.
+ *
  * @package Drupal\ms_ajax_form_example\Validator
  */
 abstract class BaseValidator implements ValidatorInterface {
@@ -12,7 +13,9 @@ abstract class BaseValidator implements ValidatorInterface {
 
   /**
    * BaseValidator constructor.
-   * @param $error_message
+   *
+   * @param string $error_message
+   *   Error message.
    */
   public function __construct($error_message) {
     $this->errorMessage = $error_message;

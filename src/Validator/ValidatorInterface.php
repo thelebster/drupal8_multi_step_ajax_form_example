@@ -3,7 +3,8 @@
 namespace Drupal\ms_ajax_form_example\Validator;
 
 /**
- * Interface ValidatorInterface
+ * Interface ValidatorInterface.
+ *
  * @package Drupal\ms_ajax_form_example\Validator
  */
 interface ValidatorInterface {

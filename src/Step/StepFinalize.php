@@ -3,7 +3,7 @@
 namespace Drupal\ms_ajax_form_example\Step;
 
 /**
- * Class StepFinalize
+ * Class StepFinalize.
  *
  * @package Drupal\ms_ajax_form_example\Step
  */
@@ -20,7 +20,7 @@ class StepFinalize extends BaseStep {
    * {@inheritdoc}
    */
   public function getButtons() {
-    return array();
+    return [];
   }
 
   /**
@@ -28,9 +28,9 @@ class StepFinalize extends BaseStep {
    */
   public function buildStepFormElements() {
 
-    $form['completed'] = array(
-      '#markup' => t('You have completed the wizard, yeah!')
-    );
+    $form['completed'] = [
+      '#markup' => t('You have completed the wizard, yeah!'),
+    ];
 
     return $form;
   }

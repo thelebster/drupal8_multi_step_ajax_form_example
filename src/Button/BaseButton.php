@@ -3,10 +3,11 @@
 namespace Drupal\ms_ajax_form_example\Button;
 
 /**
- * Class BaseButton
+ * Class BaseButton.
+ *
  * @package Drupal\ms_ajax_form_example\Button
  */
-abstract class BaseButton implements ButtonInterface{
+abstract class BaseButton implements ButtonInterface {
 
   /**
    * {@inheritdoc}
@@ -19,7 +20,7 @@ abstract class BaseButton implements ButtonInterface{
    * {@inheritdoc}
    */
   public function getSubmitHandler() {
-   return FALSE;
+    return FALSE;
   }
 
 }

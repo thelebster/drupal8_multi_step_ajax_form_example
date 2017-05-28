@@ -5,6 +5,11 @@ namespace Drupal\ms_ajax_form_example\Step;
 use Drupal\ms_ajax_form_example\Button\StepOneNextButton;
 use Drupal\ms_ajax_form_example\Validator\ValidatorRequired;
 
+/**
+ * Class StepOne.
+ *
+ * @package Drupal\ms_ajax_form_example\Step
+ */
 class StepOne extends BaseStep {
 
   /**
@@ -27,12 +32,12 @@ class StepOne extends BaseStep {
    * {@inheritdoc}
    */
   public function buildStepFormElements() {
-    $form['name'] = array(
+    $form['name'] = [
       '#type' => 'textfield',
       '#title' => t("What's your name?"),
       '#required' => FALSE,
       '#default_value' => isset($this->getValues()['name']) ? $this->getValues()['name'] : NULL,
-    );
+    ];
 
     return $form;
   }
@@ -41,20 +46,20 @@ class StepOne extends BaseStep {
    * {@inheritdoc}
    */
   public function getFieldNames() {
-    return array(
+    return [
       'name',
-    );
+    ];
   }
 
   /**
    * {@inheritdoc}
    */
   public function getFieldsValidators() {
-    return array(
-      'name' => array(
+    return [
+      'name' => [
         new ValidatorRequired("Hey stranger, please tell me your name. I would like to get to know you."),
-      ),
-    );
+      ],
+    ];
   }
 
 }

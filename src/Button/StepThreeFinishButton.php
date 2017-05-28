@@ -5,7 +5,8 @@ namespace Drupal\ms_ajax_form_example\Button;
 use Drupal\ms_ajax_form_example\Step\StepsEnum;
 
 /**
- * Class StepThreeFinishButton
+ * Class StepThreeFinishButton.
+ *
  * @package Drupal\ms_ajax_form_example\Button
  */
 class StepThreeFinishButton extends BaseButton {
@@ -14,19 +15,19 @@ class StepThreeFinishButton extends BaseButton {
    * {@inheritdoc}
    */
   public function getKey() {
-   return 'finish';
+    return 'finish';
   }
 
   /**
    * {@inheritdoc}
    */
-  public function build(){
-    return array(
+  public function build() {
+    return [
       '#type' => 'submit',
       '#value' => t('Finish!'),
-      '#goto_step'=> StepsEnum::STEP_FINALIZE,
-      '#submit_handler'=> 'submitValues',
-    );
+      '#goto_step' => StepsEnum::STEP_FINALIZE,
+      '#submit_handler' => 'submitValues',
+    ];
   }
 
   /**
