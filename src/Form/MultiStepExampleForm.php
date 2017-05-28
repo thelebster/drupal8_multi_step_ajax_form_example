@@ -35,7 +35,7 @@ class MultiStepExampleForm extends FormBase {
   /**
    * Step manager instance.
    *
-   * @var StepManager
+   * @var \Drupal\ms_ajax_form_example\Manager\StepManager
    */
   protected $stepManager;
 
