@@ -1,0 +1,6 @@
+name: Multi Step Form Example
+type: module
+description: 'Defines framework to create ajax based multi step forms.'
+core: 8.x
+package: Custom
+configure: ms_ajax_form_example.page

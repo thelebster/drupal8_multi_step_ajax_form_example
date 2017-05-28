@@ -1,0 +1,203 @@
+<?php
+
+namespace Drupal\ms_ajax_form_example\Form;
+
+use Drupal\Core\Ajax\AjaxResponse;
+use Drupal\Core\Ajax\HtmlCommand;
+use Drupal\Core\Form\FormBase;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\ms_ajax_form_example\Manager\StepManager;
+use Drupal\ms_ajax_form_example\Step\StepsEnum;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+
+/**
+ * Provides multi step ajax example form.
+ *
+ * @package Drupal\ms_ajax_form_example\Form
+ */
+class MultiStepExampleForm extends FormBase {
+  use StringTranslationTrait;
+
+  /**
+   * Step Id.
+   *
+   * @var StepsEnum 
+   */
+  protected $step_id;
+
+  /**
+   * Multi steps of the form.
+   *
+   * @var StepInterface 
+   */
+  protected $step;
+
+  /**
+   * Step manager instance.
+   *
+   * @var StepManager 
+   */
+  protected $stepManager;
+
+  /**
+   * {@inheritdoc}
+   */
+  public function __construct() {
+    $this->step_id = StepsEnum::STEP_ONE;
+    $this->stepManager = new StepManager();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getFormId() {
+    return 'ms_ajax_form_example';
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function buildForm(array $form, FormStateInterface $form_state) {
+    $form['wrapper-messages'] = array(
+      '#type' => 'container',
+      '#attributes' => array(
+        'id' => 'messages-wrapper',
+      ),
+    );
+
+    $form['wrapper'] = array(
+      '#type' => 'container',
+      '#attributes' => array(
+        'id' => 'form-wrapper',
+      ),
+    );
+
+    // Get step from step manager.
+    $this->step = $this->stepManager->getStep($this->step_id);
+
+    // Attach step form elements.
+    $form['wrapper'] += $this->step->buildStepFormElements();
+
+    // Attach buttons.
+    $form['wrapper']['actions']['#type'] = 'actions';
+    $buttons = $this->step->getButtons();
+    foreach ($buttons as $button) {
+      /** @var \Drupal\ms_ajax_form_example\Button\ButtonInterface $button */
+      $form['wrapper']['actions'][$button->getKey()] = $button->build();
+
+      if ($button->ajaxify()) {
+        // Add ajax to button.
+        $form['wrapper']['actions'][$button->getKey()]['#ajax'] = array(
+          'callback' => array($this, 'loadStep'),
+          'wrapper' => 'form-wrapper',
+          'effect' => 'fade',
+        );
+      }
+
+      $callable = array($this, $button->getSubmitHandler());
+      if ($button->getSubmitHandler() && is_callable($callable)) {
+        // attach submit handler to button, so we can execute it later on..
+        $form['wrapper']['actions'][$button->getKey()]['#submit_handler'] = $button->getSubmitHandler();
+      }
+    }
+
+    return $form;
+
+  }
+
+  /**
+   * Ajax callback to load new step.
+   *
+   * @param array $form
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *
+   * @return \Drupal\Core\Ajax\AjaxResponse
+   */
+  public function loadStep(array &$form, FormStateInterface $form_state) {
+    $response = new AjaxResponse();
+
+    $messages = drupal_get_messages();
+    if (!empty($messages)) {
+      // Form did not validate, get messages and render them.
+      $messages = [
+        '#theme' => 'status_messages',
+        '#message_list' => $messages,
+        '#status_headings' => [
+          'status' => t('Status message'),
+          'error' => t('Error message'),
+          'warning' => t('Warning message'),
+        ],
+      ];
+      $response->addCommand(new HtmlCommand('#messages-wrapper', $messages));
+    }
+    else {
+      // Remove messages.
+      $response->addCommand(new HtmlCommand('#messages-wrapper', ''));
+    }
+
+    // Update Form.
+    $response->addCommand(new HtmlCommand('#form-wrapper',
+      $form['wrapper']));
+
+
+    return $response;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function validateForm(array &$form, FormStateInterface $form_state) {
+    $triggering_element = $form_state->getTriggeringElement();
+    // Only validate if validation doesn't have to be skipped.
+    // For example on "previous" button.
+    if (empty($triggering_element['#skip_validation']) && $fields_validators = $this->step->getFieldsValidators()) {
+      // Validate fields.
+      foreach ($fields_validators as $field => $validators) {
+        // Validate all validators for field.
+        $field_value = $form_state->getValue($field);
+        foreach ($validators as $validator) {
+          if (!$validator->validates($field_value)) {
+            $form_state->setErrorByName($field, $validator->getErrorMessage());
+          }
+        }
+      }
+    }
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function submitForm(array &$form, FormStateInterface $form_state) {
+    // Save filled out values to step. So we can use them as default_value later on.
+    $values = array();
+    foreach ($this->step->getFieldNames() as $name) {
+      $values[$name] = $form_state->getValue($name);
+    }
+    $this->step->setValues($values);
+    // Add step to manager.
+    $this->stepManager->addStep($this->step);
+    // Set step to navigate to.
+    $triggering_element = $form_state->getTriggeringElement();
+    $this->step_id = $triggering_element['#goto_step'];
+
+    // If an extra submit handler is set, execute it.
+    // We already tested if it is callable before.
+    if(isset($triggering_element['#submit_handler'])){
+      $this->{$triggering_element['#submit_handler']}($form, $form_state);
+    }
+
+    $form_state->setRebuild(TRUE);
+  }
+
+  /**
+   * Submit handler for last step of form.
+   *
+   * @param array $form
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   */
+  public function submitValues(array &$form, FormStateInterface $form_state) {
+    // Submit all values to DB or do whatever you want on submit.
+  }
+
+}

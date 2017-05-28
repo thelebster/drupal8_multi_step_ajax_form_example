@@ -1,0 +1,7 @@
+ms_ajax_form_example.page:
+  path: '/multi-step-ajax-form'
+  defaults:
+    _form: '\Drupal\ms_ajax_form_example\Form\MultiStepExampleForm'
+    _title: 'Welcome'
+  requirements:
+    _permission: 'access content'
