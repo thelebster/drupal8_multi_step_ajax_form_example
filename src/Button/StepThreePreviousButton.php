@@ -21,7 +21,7 @@ class StepThreePreviousButton extends BaseButton {
   /**
    * {@inheritdoc}
    */
-  public function build(){
+  public function build() {
     return [
       '#type' => 'submit',
       '#value' => t('Previous'),

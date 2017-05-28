@@ -75,6 +75,6 @@ abstract class BaseStep implements StepInterface {
   /**
    * {@inheritdoc}
    */
-  protected abstract function setStep();
+  abstract protected function setStep();
 
 }

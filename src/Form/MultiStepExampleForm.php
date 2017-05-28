@@ -35,7 +35,7 @@ class MultiStepExampleForm extends FormBase {
   /**
    * Step manager instance.
    *
-   * @var StepManager 
+   * @var StepManager
    */
   protected $stepManager;
 
@@ -94,7 +94,7 @@ class MultiStepExampleForm extends FormBase {
         ];
       }
 
-      $callable = array($this, $button->getSubmitHandler());
+      $callable = [$this, $button->getSubmitHandler()];
       if ($button->getSubmitHandler() && is_callable($callable)) {
         // Attach submit handler to button, so we can execute it later on..
         $form['wrapper']['actions'][$button->getKey()]['#submit_handler'] = $button->getSubmitHandler();
@@ -184,7 +184,7 @@ class MultiStepExampleForm extends FormBase {
 
     // If an extra submit handler is set, execute it.
     // We already tested if it is callable before.
-    if(isset($triggering_element['#submit_handler'])) {
+    if (isset($triggering_element['#submit_handler'])) {
       $this->{$triggering_element['#submit_handler']}($form, $form_state);
     }
 

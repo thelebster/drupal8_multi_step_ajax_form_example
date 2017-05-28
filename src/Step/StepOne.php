@@ -23,9 +23,9 @@ class StepOne extends BaseStep {
    * {@inheritdoc}
    */
   public function getButtons() {
-    return array(
+    return [
       new StepOneNextButton(),
-    );
+    ];
   }
 
   /**

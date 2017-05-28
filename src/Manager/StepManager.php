@@ -6,7 +6,7 @@ use Drupal\ms_ajax_form_example\Step\StepInterface;
 use Drupal\ms_ajax_form_example\Step\StepsEnum;
 
 /**
- * Class StepManager
+ * Class StepManager.
  *
  * @package Drupal\ms_ajax_form_example\Manager
  */
@@ -38,7 +38,7 @@ class StepManager {
   /**
    * Fetches step from steps property, If it doesn't exist, create step object.
    *
-   * @param \Drupal\ms_ajax_form_example\Step\StepsEnum $step_id
+   * @param int $step_id
    *   Step ID.
    *
    * @return \Drupal\ms_ajax_form_example\Step\StepInterface
@@ -61,7 +61,7 @@ class StepManager {
   }
 
   /**
-   * Get all steps
+   * Get all steps.
    *
    * @return \Drupal\ms_ajax_form_example\Step\StepInterface
    *   Steps.

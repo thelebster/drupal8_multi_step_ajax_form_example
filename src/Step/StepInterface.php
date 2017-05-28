@@ -10,6 +10,8 @@ namespace Drupal\ms_ajax_form_example\Step;
 interface StepInterface {
 
   /**
+   * Gets the step.
+   *
    * @returns step;
    */
   public function getStep();
@@ -30,11 +32,15 @@ interface StepInterface {
   public function isLastStep();
 
   /**
+   * All fields name.
+   *
    * @returns array of all field names.
    */
   public function getFieldNames();
 
   /**
+   * All field validators.
+   *
    * @returns array of fields with their validation requirements.
    */
   public function getFieldsValidators();
